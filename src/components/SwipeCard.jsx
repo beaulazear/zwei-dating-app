@@ -31,28 +31,30 @@ const SwipeCard = ({ user, onSwipe, isTop }) => {
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       whileDrag={{ cursor: 'grabbing' }}
     >
-      <div className="card-image" style={{ backgroundImage: `url(${user.image})` }} />
-      <div className="card-info">
-        <div className="card-header">
-          <h2>
-            {user.name} <span className="age">{user.age}</span>
-          </h2>
-          <p className="distance">
-            <svg viewBox="0 0 24 24" width="14" height="14" className="location-pin">
-              <path
-                fill="#666"
-                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-              />
-            </svg>
-            {user.distance} miles away
-          </p>
-        </div>
-        {user.truthsAndLie && (
-          <div className="truths-section">
-            <p className="truths-header">{user.truthsAndLie.header}</p>
-            <p className="truths-text">{user.truthsAndLie.text}</p>
+      <div className="card-image" style={{ backgroundImage: `url(${user.image})` }}>
+        <div className="card-gradient" />
+        <div className="card-info">
+          <div className="card-header">
+            <h2>
+              {user.name} <span className="age">{user.age}</span>
+            </h2>
+            <p className="distance">
+              <svg viewBox="0 0 24 24" width="14" height="14" className="location-pin">
+                <path
+                  fill="white"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                />
+              </svg>
+              {user.distance} miles away
+            </p>
           </div>
-        )}
+          {user.truthsAndLie && (
+            <div className="truths-section">
+              <p className="truths-header">{user.truthsAndLie.header}</p>
+              <p className="truths-text">{user.truthsAndLie.text}</p>
+            </div>
+          )}
+        </div>
       </div>
     </motion.div>
   );

@@ -9,62 +9,30 @@
   background: #FFFFFF;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo {
-  font-size: 32px;
-  font-weight: 700;
-  color: #343434;
-  letter-spacing: 1px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-
-.header-icon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.header-icon:hover {
-  transform: scale(1.1);
-}
 
 /* Main Content */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  max-width: 500px;
+  position: relative;
   width: 100%;
-  margin: 0 auto;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Card Container */
 .card-container {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  max-width: 400px;
-  height: 600px;
-  margin-bottom: 20px;
+  height: 100%;
 }
 
 .no-more-cards {
@@ -76,12 +44,14 @@
   align-items: center;
   text-align: center;
   color: #ADADAD;
+  padding: 20px;
 }
 
 .no-more-cards h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 28px;
+  margin-bottom: 12px;
   color: #343434;
+  font-weight: 600;
 }
 
 .no-more-cards p {
@@ -91,49 +61,61 @@
 
 /* Action Buttons */
 .action-buttons {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  gap: 16px;
+  gap: 24px;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 }
 
 .action-btn {
   border: none;
   border-radius: 50%;
-  background: white;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 64px;
+  height: 64px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .action-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn:active {
   transform: scale(0.95);
 }
 
-.rewind-btn,
-.star-btn,
-.boost-btn {
-  width: 48px;
-  height: 48px;
+.nope-btn {
+  background: white;
+  color: #ff4458;
+  border: 2px solid #ff4458;
 }
 
-.nope-btn {
-  width: 60px;
-  height: 60px;
+.nope-btn:hover {
+  background: #fff5f7;
 }
 
 .like-btn {
-  width: 64px;
-  height: 64px;
+  background: #ff4458;
+  color: white;
+  border: 2px solid #ff4458;
+}
+
+.like-btn:hover {
+  background: #ff5566;
 }
 
 /* Match Overlay */
@@ -260,32 +242,22 @@
 
 /* Responsive Design */
 @media (max-width: 480px) {
-  .card-container {
-    height: 500px;
-  }
-
   .action-buttons {
-    gap: 12px;
+    bottom: 24px;
+    gap: 20px;
+    padding: 12px 24px;
   }
 
-  .rewind-btn,
-  .star-btn,
-  .boost-btn {
-    width: 40px;
-    height: 40px;
-  }
-
-  .nope-btn {
-    width: 52px;
-    height: 52px;
-  }
-
-  .like-btn {
+  .action-btn {
     width: 56px;
     height: 56px;
   }
 
   .match-title {
     font-size: 56px;
+  }
+
+  .card-info {
+    padding: 0 20px 100px 20px;
   }
 }

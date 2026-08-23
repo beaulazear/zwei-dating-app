@@ -2,11 +2,11 @@
   "name": "untitled-folder",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://github.com/beaulazear/zwei-dating-app.git",
+  "homepage": "https://beaulazear.github.io/zwei-dating-app",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
