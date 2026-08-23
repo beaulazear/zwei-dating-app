@@ -1,0 +1,99 @@
+.location-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.location-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.location-icon {
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.location-icon svg path {
+  fill: #343434;
+}
+
+.location-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #343434;
+  margin-bottom: 12px;
+}
+
+.location-message {
+  font-size: 16px;
+  color: #343434;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.location-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.location-btn {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confirm-btn {
+  background: #343434;
+  color: white;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 52, 52, 0.3);
+}
+
+.cancel-btn {
+  background: #ADADAD;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #e8e8e8;
+}
+
+.location-btn:active {
+  transform: translateY(0);
+}

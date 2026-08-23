@@ -1,0 +1,77 @@
+.swipe-card {
+  position: absolute;
+  width: 100%;
+  max-width: 400px;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  will-change: transform;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image {
+  width: 100%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.card-info {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-header h2 {
+  margin: 0 0 4px 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.age {
+  font-size: 28px;
+  font-weight: 400;
+  color: #333;
+}
+
+.distance {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.location-pin {
+  flex-shrink: 0;
+}
+
+.truths-section {
+  margin-top: 8px;
+}
+
+.truths-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.truths-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+  margin: 0;
+}

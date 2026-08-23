@@ -1,0 +1,289 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100vh;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 700;
+  color: #343434;
+  letter-spacing: 1px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.header-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Card Container */
+.card-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 600px;
+  margin-bottom: 20px;
+}
+
+.no-more-cards {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #888;
+}
+
+.no-more-cards h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.no-more-cards p {
+  font-size: 16px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.rewind-btn,
+.star-btn,
+.boost-btn {
+  width: 48px;
+  height: 48px;
+}
+
+.nope-btn {
+  width: 60px;
+  height: 60px;
+}
+
+.like-btn {
+  width: 64px;
+  height: 64px;
+}
+
+/* Match Overlay */
+.match-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #fe466f, #fd5564, #ff6e5a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.match-content {
+  text-align: center;
+  color: white;
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.match-title {
+  font-size: 72px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.match-subtitle {
+  font-size: 18px;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+
+.match-images {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.match-prompt {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 20px;
+  opacity: 0.95;
+}
+
+.match-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  border: 5px solid white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.send-message-btn,
+.keep-swiping-btn {
+  width: 100%;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.send-message-btn {
+  background: white;
+  color: #fe466f;
+}
+
+.send-message-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.keep-swiping-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.keep-swiping-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.send-message-btn:active,
+.keep-swiping-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .card-container {
+    height: 500px;
+  }
+
+  .action-buttons {
+    gap: 12px;
+  }
+
+  .rewind-btn,
+  .star-btn,
+  .boost-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nope-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .like-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .match-title {
+    font-size: 56px;
+  }
+}
