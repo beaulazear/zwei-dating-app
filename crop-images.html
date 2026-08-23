@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Profile Images - zwei</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #f5f5f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #343434;
+      margin-bottom: 20px;
+    }
+
+    .instructions {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .preview-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .preview-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .preview-card h3 {
+      margin: 0 0 15px 0;
+      color: #343434;
+    }
+
+    canvas {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #343434;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .status {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    #originalCanvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Crop Profile Images</h1>
+
+    <div class="instructions">
+      <p><strong>This tool will automatically crop Beau and Dede's photos from Mock.jpg</strong></p>
+      <p>Click the download buttons below to save each cropped image.</p>
+    </div>
+
+    <canvas id="originalCanvas"></canvas>
+
+    <div class="preview-section">
+      <div class="preview-card">
+        <h3>Beau's Photo</h3>
+        <canvas id="beauCanvas" width="305" height="223"></canvas>
+        <button onclick="downloadBeau()">Download Beau.jpg</button>
+        <div id="beauStatus" class="status"></div>
+      </div>
+
+      <div class="preview-card">
+        <h3>Dede's Photo</h3>
+        <canvas id="dedeCanvas" width="305" height="223"></canvas>
+        <button onclick="downloadDede()">Download Dede.jpg</button>
+        <div id="dedeStatus" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const originalCanvas = document.getElementById('originalCanvas');
+    const beauCanvas = document.getElementById('beauCanvas');
+    const dedeCanvas = document.getElementById('dedeCanvas');
+    const originalCtx = originalCanvas.getContext('2d');
+    const beauCtx = beauCanvas.getContext('2d');
+    const dedeCtx = dedeCanvas.getContext('2d');
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+
+    img.onload = function() {
+      originalCanvas.width = img.width;
+      originalCanvas.height = img.height;
+      originalCtx.drawImage(img, 0, 0);
+
+      // Crop Beau's photo (left side)
+      // Photo area: approximately x:20, y:37, width:305, height:223
+      beauCtx.drawImage(
+        originalCanvas,
+        20, 37, 305, 223,  // source rectangle (x, y, width, height)
+        0, 0, 305, 223      // destination rectangle
+      );
+
+      // Crop Dede's photo (right side)
+      // Photo area: approximately x:347, y:37, width:305, height:223
+      dedeCtx.drawImage(
+        originalCanvas,
+        347, 37, 305, 223,  // source rectangle
+        0, 0, 305, 223       // destination rectangle
+      );
+    };
+
+    img.onerror = function() {
+      alert('Error loading image. Please copy Mock.jpg to the public folder first.');
+    };
+
+    // Load the image - need to use it from public folder for this tool to work
+    img.src = './Mock.jpg';
+
+    function downloadBeau() {
+      beauCanvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'beau-profile.jpg';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        const status = document.getElementById('beauStatus');
+        status.textContent = '✓ Downloaded successfully!';
+        status.className = 'status success';
+        setTimeout(() => {
+          status.style.display = 'none';
+        }, 3000);
+      }, 'image/jpeg', 0.95);
+    }
+
+    function downloadDede() {
+      dedeCanvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'dede-profile.jpg';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        const status = document.getElementById('dedeStatus');
+        status.textContent = '✓ Downloaded successfully!';
+        status.className = 'status success';
+        setTimeout(() => {
+          status.style.display = 'none';
+        }, 3000);
+      }, 'image/jpeg', 0.95);
+    }
+  </script>
+</body>
+</html>

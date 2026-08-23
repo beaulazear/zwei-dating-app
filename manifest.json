@@ -1,0 +1,24 @@
+{
+  "name": "zwei",
+  "short_name": "zwei",
+  "description": "Dating app",
+  "start_url": "/zwei-dating-app/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/zwei-dating-app/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/zwei-dating-app/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
