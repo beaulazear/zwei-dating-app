@@ -11,6 +11,19 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+/* Dimmed state when location overlay is active */
+.app-dimmed .main-content {
+  filter: brightness(0.4) grayscale(0.3);
+  transition: filter 0.3s ease-in-out;
+  pointer-events: none; /* Disable interaction when dimmed */
+}
+
+.app:not(.app-dimmed) .main-content {
+  filter: brightness(1) grayscale(0);
+  transition: filter 0.4s ease-out;
 }
 
 
@@ -128,19 +141,18 @@
   background: #ff5566;
 }
 
-/* Match Overlay */
+/* Match Overlay - Exact copy of location popup styling */
 .match-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #343434;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  cursor: pointer;
+  z-index: 1500;
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -153,100 +165,89 @@
   }
 }
 
-.match-content {
-  text-align: center;
-  color: white;
-  padding: 40px;
+.match-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
   max-width: 400px;
-  width: 100%;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.match-icon {
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.match-icon svg path {
+  fill: #343434;
 }
 
 .match-title {
-  font-size: 72px;
-  font-weight: 800;
-  margin-bottom: 16px;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: scaleIn 0.5s ease-out;
+  font-size: 24px;
+  font-weight: 700;
+  color: #343434;
+  margin-bottom: 12px;
 }
 
-@keyframes scaleIn {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.match-message {
+  font-size: 16px;
+  color: #343434;
+  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
-.match-subtitle {
-  font-size: 18px;
-  margin-bottom: 40px;
-  opacity: 0.95;
-}
-
-.match-images {
+.match-buttons {
   display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.match-prompt {
-  font-size: 20px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 20px;
-  opacity: 0.95;
-}
-
-.match-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center;
-  border: 5px solid white;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.send-message-btn,
-.keep-swiping-btn {
-  width: 100%;
-  padding: 16px 32px;
+.match-btn {
+  padding: 16px 24px;
   border: none;
   border-radius: 30px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
-.send-message-btn {
-  background: white;
-  color: #343434;
-}
-
-.send-message-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.keep-swiping-btn {
-  background: transparent;
+.send-btn {
+  background: #343434;
   color: white;
-  border: 2px solid #ADADAD;
 }
 
-.keep-swiping-btn:hover {
-  background: rgba(173, 173, 173, 0.2);
+.send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 52, 52, 0.3);
 }
 
-.send-message-btn:active,
-.keep-swiping-btn:active {
+.not-now-btn {
+  background: #ADADAD;
+  color: white;
+}
+
+.not-now-btn:hover {
+  background: #e8e8e8;
+}
+
+.match-btn:active {
   transform: translateY(0);
 }
 

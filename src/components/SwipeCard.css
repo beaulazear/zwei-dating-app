@@ -58,16 +58,16 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 24px 180px 24px;
+  padding: 0 24px 110px 24px;
   color: white;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
-.card-header h2 {
-  margin: 0 0 8px 0;
+.card-info h2 {
+  margin: 0;
   font-size: 36px;
   font-weight: 700;
   color: white;
@@ -84,7 +84,7 @@
 }
 
 .distance {
-  margin: 0 0 8px 0;
+  margin: 0;
   font-size: 15px;
   color: white;
   display: flex;
@@ -95,24 +95,4 @@
 
 .location-pin {
   flex-shrink: 0;
-}
-
-.truths-section {
-  margin-top: 4px;
-}
-
-.truths-header {
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  margin: 0 0 6px 0;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-.truths-text {
-  font-size: 15px;
-  line-height: 1.5;
-  color: white;
-  margin: 0;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }

@@ -34,23 +34,25 @@ function App() {
   };
 
   const handleSwipe = (direction, user) => {
-    setTimeout(() => {
-      setCurrentUsers((prev) => prev.filter((u) => u.id !== user.id));
-
-      // Match with Dede (id 4) when swiping right
-      if (direction === 'right' && user.id === 4) {
-        setMatchedUser(user);
-        setMatches((prev) => [...prev, user]);
-        setTimeout(() => {
-          setShowMatch(true);
-          setAppState('match');
-        }, 300);
-      }
-    }, 300);
+    // Match with Dede (id 4) when swiping right
+    if (direction === 'right' && user.id === 4) {
+      // Don't remove the card yet - show match popup first
+      setMatchedUser(user);
+      setMatches((prev) => [...prev, user]);
+      setShowMatch(true);
+      setAppState('match');
+    } else {
+      // For non-matches, remove the card normally
+      setTimeout(() => {
+        setCurrentUsers((prev) => prev.filter((u) => u.id !== user.id));
+      }, 300);
+    }
   };
 
   const handleSendMessage = () => {
     setShowMatch(false);
+    // Remove Dede's card now
+    setCurrentUsers((prev) => prev.filter((u) => u.id !== matchedUser.id));
     setAppState('messaging');
   };
 
@@ -70,14 +72,6 @@ function App() {
     return <LoadScreen />;
   }
 
-  if (appState === 'location') {
-    return (
-      <Suspense fallback={<LoadScreen />}>
-        <LocationChange onConfirm={handleLocationConfirm} />
-      </Suspense>
-    );
-  }
-
   if (appState === 'messaging' && matchedUser) {
     return (
       <Suspense fallback={<LoadScreen />}>
@@ -87,7 +81,7 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app ${appState === 'location' || appState === 'match' ? 'app-dimmed' : ''}`}>
       <main className="main-content">
         <div className="card-container">
           {currentUsers.length === 0 ? (
@@ -132,21 +126,37 @@ function App() {
 
       {showMatch && matchedUser && (
         <div className="match-overlay">
-          <div className="match-content" onClick={(e) => e.stopPropagation()}>
-            <h1 className="match-title">It's a Match!</h1>
-            <p className="match-subtitle">You and {matchedUser.name} have liked each other</p>
-            <div className="match-images">
-              <div className="match-image" style={{ backgroundImage: `url(${matchedUser.image})` }} />
+          <div className="match-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="match-icon">
+              <svg viewBox="0 0 24 24" width="48" height="48">
+                <path d="M12,21.35l-1.45-1.32C5.4,15.36,2,12.28,2,8.5C2,5.42,4.42,3,7.5,3c1.74,0,3.41,0.81,4.5,2.09 C13.09,3.81,14.76,3,16.5,3C19.58,3,22,5.42,22,8.5c0,3.78-3.4,6.86-8.55,11.54L12,21.35z"/>
+              </svg>
             </div>
-            <p className="match-prompt">Send a Message?</p>
-            <button className="send-message-btn" onClick={handleSendMessage}>
-              SEND MESSAGE
-            </button>
-            <button className="keep-swiping-btn" onClick={() => setShowMatch(false)}>
-              KEEP SWIPING
-            </button>
+            <h2 className="match-title">It's a Match!</h2>
+            <p className="match-message">
+              Send message now?
+            </p>
+            <div className="match-buttons">
+              <button className="match-btn send-btn" onClick={handleSendMessage}>
+                Send
+              </button>
+              <button className="match-btn not-now-btn" onClick={() => {
+                setShowMatch(false);
+                setAppState('swiping');
+                // Remove Dede's card now
+                setCurrentUsers((prev) => prev.filter((u) => u.id !== matchedUser.id));
+              }}>
+                Not Now
+              </button>
+            </div>
           </div>
         </div>
+      )}
+
+      {appState === 'location' && (
+        <Suspense fallback={null}>
+          <LocationChange onConfirm={handleLocationConfirm} />
+        </Suspense>
       )}
     </div>
   );

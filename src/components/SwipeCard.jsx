@@ -11,8 +11,17 @@ const SwipeCard = memo(({ user, onSwipe, isTop }) => {
 
   const handleDragEnd = (event, info) => {
     if (Math.abs(info.offset.x) > 100) {
-      setExitX(info.offset.x > 0 ? 300 : -300);
-      onSwipe(info.offset.x > 0 ? 'right' : 'left', user);
+      const direction = info.offset.x > 0 ? 'right' : 'left';
+
+      // Check if this is a match (Dede + right swipe)
+      const isMatch = direction === 'right' && user.id === 4;
+
+      // Only animate the card away if it's not a match
+      if (!isMatch) {
+        setExitX(info.offset.x > 0 ? 300 : -300);
+      }
+
+      onSwipe(direction, user);
     }
   };
 
@@ -46,26 +55,18 @@ const SwipeCard = memo(({ user, onSwipe, isTop }) => {
         {!imageLoaded && <div className="card-image-placeholder" />}
         <div className="card-gradient" />
         <div className="card-info">
-          <div className="card-header">
-            <h2>
-              {user.name} <span className="age">{user.age}</span>
-            </h2>
-            <p className="distance">
-              <svg viewBox="0 0 24 24" width="14" height="14" className="location-pin">
-                <path
-                  fill="white"
-                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-                />
-              </svg>
-              {user.distance} miles away
-            </p>
-          </div>
-          {user.truthsAndLie && (
-            <div className="truths-section">
-              <p className="truths-header">{user.truthsAndLie.header}</p>
-              <p className="truths-text">{user.truthsAndLie.text}</p>
-            </div>
-          )}
+          <h2>
+            {user.name} <span className="age">{user.age}</span>
+          </h2>
+          <p className="distance">
+            <svg viewBox="0 0 24 24" width="14" height="14" className="location-pin">
+              <path
+                fill="white"
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+              />
+            </svg>
+            {user.distance} miles away
+          </p>
         </div>
       </div>
     </motion.div>

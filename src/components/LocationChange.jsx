@@ -13,9 +13,9 @@ const LocationChange = memo(({ onConfirm }) => {
             />
           </svg>
         </div>
-        <h2 className="location-title">Change Location</h2>
+        <h2 className="location-title">New Location Detected</h2>
         <p className="location-message">
-          New location detected. Change range to New York, New York?
+          Change location to New York, NY?
         </p>
         <div className="location-buttons">
           <button className="location-btn confirm-btn" onClick={onConfirm}>
