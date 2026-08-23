@@ -75,16 +75,18 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: #888;
+  color: #ADADAD;
 }
 
 .no-more-cards h2 {
   font-size: 24px;
   margin-bottom: 10px;
+  color: #343434;
 }
 
 .no-more-cards p {
   font-size: 16px;
+  color: #ADADAD;
 }
 
 /* Action Buttons */
@@ -141,7 +143,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #fe466f, #fd5564, #ff6e5a);
+  background: #343434;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +235,7 @@
 
 .send-message-btn {
   background: white;
-  color: #fe466f;
+  color: #343434;
 }
 
 .send-message-btn:hover {
@@ -244,11 +246,11 @@
 .keep-swiping-btn {
   background: transparent;
   color: white;
-  border: 2px solid white;
+  border: 2px solid #ADADAD;
 }
 
 .keep-swiping-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(173, 173, 173, 0.2);
 }
 
 .send-message-btn:active,

@@ -65,7 +65,7 @@
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  border: 2px solid #fe466f;
+  border: 2px solid #343434;
 }
 
 .match-info h3 {
@@ -137,7 +137,7 @@
 }
 
 .message-sent .message-bubble {
-  background: linear-gradient(90deg, #fe466f, #fd5564);
+  background: #343434;
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -169,7 +169,7 @@
 }
 
 .message-input:focus {
-  border-color: #fe466f;
+  border-color: #343434;
 }
 
 .send-btn {

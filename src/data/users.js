@@ -24,20 +24,20 @@ export const users = [
   },
   {
     id: 3,
-    name: 'Amanda',
-    age: 28,
-    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=80',
-    distance: 8,
+    name: 'Beau',
+    age: 25,
+    image: '/src/assets/Mock.jpg',
+    distance: 3,
     truthsAndLie: {
       header: 'Two truths & a lie...',
-      text: 'I\'ve never broken a bone. I once won a hot dog eating contest. I can do a handstand for over 2 minutes.'
+      text: 'I was a Gerber baby. I once won a regional hot dog eating competition. Chrissy Teigen used my banana bread recipe on her secret food blog'
     }
   },
   {
     id: 4,
     name: 'Dede',
     age: 23,
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=80',
+    image: '/src/assets/Mock.jpg',
     distance: 10,
     truthsAndLie: {
       header: '2 truths and a lie:',

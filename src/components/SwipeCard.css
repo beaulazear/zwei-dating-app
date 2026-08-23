@@ -48,7 +48,7 @@
 .distance {
   margin: 0;
   font-size: 14px;
-  color: #666;
+  color: #ADADAD;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -58,6 +58,10 @@
   flex-shrink: 0;
 }
 
+.location-pin path {
+  fill: #ADADAD;
+}
+
 .truths-section {
   margin-top: 8px;
 }
@@ -65,13 +69,13 @@
 .truths-header {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: #343434;
   margin: 0 0 8px 0;
 }
 
 .truths-text {
   font-size: 14px;
   line-height: 1.5;
-  color: #666;
+  color: #343434;
   margin: 0;
 }
