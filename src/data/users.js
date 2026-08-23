@@ -1,4 +1,7 @@
 // Robert's POV - Users for the dating flow
+// Import local images
+import mockImage from '../assets/Mock.jpg';
+
 export const users = [
   {
     id: 1,
@@ -26,7 +29,7 @@ export const users = [
     id: 3,
     name: 'Beau',
     age: 25,
-    image: '/src/assets/Mock.jpg',
+    image: mockImage,
     distance: 3,
     truthsAndLie: {
       header: 'Two truths & a lie...',
@@ -37,7 +40,7 @@ export const users = [
     id: 4,
     name: 'Dede',
     age: 23,
-    image: '/src/assets/Mock.jpg',
+    image: mockImage,
     distance: 10,
     truthsAndLie: {
       header: '2 truths and a lie:',

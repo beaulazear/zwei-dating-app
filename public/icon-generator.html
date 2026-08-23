@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Generator - zwei</title>
+  <style>
+    @font-face {
+      font-family: 'BNKossell';
+      src: url('../src/assets/BNKossell.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #f5f5f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #343434;
+      margin-bottom: 20px;
+    }
+
+    .instructions {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .instructions h2 {
+      margin-top: 0;
+      color: #343434;
+    }
+
+    .instructions ol {
+      padding-left: 20px;
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+    }
+
+    .instructions code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .icon-preview {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .icon-wrapper {
+      text-align: center;
+    }
+
+    .icon-label {
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #343434;
+    }
+
+    .icon {
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'BNKossell', sans-serif;
+      color: #FFFFFF;
+      font-weight: 700;
+      border-radius: 22.37%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon-180 {
+      width: 180px;
+      height: 180px;
+      font-size: 140px;
+    }
+
+    .icon-192 {
+      width: 192px;
+      height: 192px;
+      font-size: 150px;
+    }
+
+    .icon-512 {
+      width: 256px;
+      height: 256px;
+      font-size: 200px;
+    }
+
+    .note {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>zwei App Icons</h1>
+
+    <div class="instructions">
+      <h2>How to Create Apple Touch Icon:</h2>
+      <ol>
+        <li>Open this page on your computer</li>
+        <li>Take a screenshot of the <strong>180×180</strong> icon below (make sure it's exactly 180×180 pixels)</li>
+        <li>Or use browser dev tools to save the element as an image</li>
+        <li>Save it as <code>apple-touch-icon.png</code> in the <code>public</code> folder</li>
+        <li>For best results, use a screenshot tool that can capture exact pixel dimensions</li>
+      </ol>
+
+      <div class="note">
+        <strong>💡 Pro Tip:</strong> You can also right-click the icon below and use browser extensions or dev tools to export it as a PNG at the exact dimensions needed.
+      </div>
+    </div>
+
+    <div class="icon-preview">
+      <div class="icon-wrapper">
+        <div class="icon-label">Apple Touch Icon (180×180)</div>
+        <div class="icon icon-180" id="apple-touch-icon">z</div>
+      </div>
+
+      <div class="icon-wrapper">
+        <div class="icon-label">Android Icon (192×192)</div>
+        <div class="icon icon-192">z</div>
+      </div>
+
+      <div class="icon-wrapper">
+        <div class="icon-label">High-Res (512×512 preview)</div>
+        <div class="icon icon-512">z</div>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h2>Alternative Method - Use Canvas to Download:</h2>
+      <button onclick="generateIcon(180, 'apple-touch-icon.png')" style="padding: 10px 20px; background: #343434; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+        Download 180×180 (Apple)
+      </button>
+      <button onclick="generateIcon(192, 'android-icon-192.png')" style="padding: 10px 20px; background: #343434; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+        Download 192×192 (Android)
+      </button>
+      <button onclick="generateIcon(512, 'icon-512.png')" style="padding: 10px 20px; background: #343434; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">
+        Download 512×512
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function generateIcon(size, filename) {
+      // Wait for font to load
+      document.fonts.ready.then(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Black background
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, size, size);
+
+        // White 'z' text
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = `700 ${size * 0.78}px BNKossell, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('z', size / 2, size / 2 + size * 0.05);
+
+        // Download
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+      });
+    }
+  </script>
+</body>
+</html>
