@@ -1,9 +1,10 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import './SwipeCard.css';
 
-const SwipeCard = ({ user, onSwipe, isTop }) => {
+const SwipeCard = memo(({ user, onSwipe, isTop }) => {
   const [exitX, setExitX] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0]);
@@ -31,7 +32,18 @@ const SwipeCard = ({ user, onSwipe, isTop }) => {
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       whileDrag={{ cursor: 'grabbing' }}
     >
-      <div className="card-image" style={{ backgroundImage: `url(${user.image})` }}>
+      <div className="card-image">
+        {/* Lazy load image */}
+        <img
+          src={user.image}
+          alt={`${user.name}, ${user.age}`}
+          className="card-image-element"
+          loading={isTop ? 'eager' : 'lazy'}
+          decoding="async"
+          onLoad={() => setImageLoaded(true)}
+          style={{ opacity: imageLoaded ? 1 : 0 }}
+        />
+        {!imageLoaded && <div className="card-image-placeholder" />}
         <div className="card-gradient" />
         <div className="card-info">
           <div className="card-header">
@@ -58,6 +70,8 @@ const SwipeCard = ({ user, onSwipe, isTop }) => {
       </div>
     </motion.div>
   );
-};
+});
+
+SwipeCard.displayName = 'SwipeCard';
 
 export default SwipeCard;

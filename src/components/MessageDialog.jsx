@@ -1,23 +1,23 @@
-import { useState } from 'react';
+import { useState, memo, useCallback } from 'react';
 import './MessageDialog.css';
 
-const MessageDialog = ({ user, onClose }) => {
+const MessageDialog = memo(({ user, onClose }) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
 
-  const handleSendMessage = () => {
+  const handleSendMessage = useCallback(() => {
     if (inputText.trim()) {
-      setMessages([...messages, { text: inputText, sender: 'user', timestamp: new Date() }]);
+      setMessages(prev => [...prev, { text: inputText, sender: 'user', timestamp: new Date() }]);
       setInputText('');
     }
-  };
+  }, [inputText]);
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = useCallback((e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
-  };
+  }, [handleSendMessage]);
 
   return (
     <div className="message-dialog-overlay">
@@ -76,6 +76,8 @@ const MessageDialog = ({ user, onClose }) => {
       </div>
     </div>
   );
-};
+});
+
+MessageDialog.displayName = 'MessageDialog';
 
 export default MessageDialog;

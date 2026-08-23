@@ -1,9 +1,19 @@
 {
-  "name": "untitled-folder",
+  "name": "zwei",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A modern, mobile-first dating app prototype with swipeable cards and real-time messaging",
+  "author": "Beau Lazear",
   "homepage": "https://beaulazear.github.io/zwei-dating-app",
   "type": "module",
+  "keywords": [
+    "dating-app",
+    "react",
+    "vite",
+    "framer-motion",
+    "mobile-first",
+    "pwa"
+  ],
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",

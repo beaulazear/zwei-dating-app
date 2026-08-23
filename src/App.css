@@ -72,18 +72,18 @@
 /* Action Buttons */
 .action-buttons {
   position: absolute;
-  bottom: max(40px, calc(env(safe-area-inset-bottom) + 20px)); /* Safe area for home indicator */
+  bottom: max(32px, calc(env(safe-area-inset-bottom) + 16px)); /* Safe area for home indicator */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 24px;
+  gap: 20px;
   justify-content: center;
   align-items: center;
-  padding: 16px 32px;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 12px 24px;
+  background: rgba(30, 30, 30, 0.8);
   backdrop-filter: blur(10px);
   border-radius: 50px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
 
@@ -95,13 +95,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 52px;
+  height: 52px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .action-btn:active {
@@ -109,19 +109,19 @@
 }
 
 .nope-btn {
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   color: #ff4458;
-  border: 2px solid #ff4458;
+  border: none;
 }
 
 .nope-btn:hover {
-  background: #fff5f7;
+  background: white;
 }
 
 .like-btn {
   background: #ff4458;
   color: white;
-  border: 2px solid #ff4458;
+  border: none;
 }
 
 .like-btn:hover {
@@ -254,13 +254,13 @@
 @media (max-width: 480px) {
   .action-buttons {
     bottom: max(24px, calc(env(safe-area-inset-bottom) + 12px));
-    gap: 20px;
-    padding: 12px 24px;
+    gap: 18px;
+    padding: 10px 20px;
   }
 
   .action-btn {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
   }
 
   .match-title {
@@ -268,6 +268,6 @@
   }
 
   .card-info {
-    padding: 0 20px 100px 20px;
+    padding: 0 20px 160px 20px;
   }
 }

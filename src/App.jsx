@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import SwipeCard from './components/SwipeCard';
 import LoadScreen from './components/LoadScreen';
-import LocationChange from './components/LocationChange';
-import MessageDialog from './components/MessageDialog';
 import { users } from './data/users';
+import { preloadFirstCard } from './utils/preloadImages';
 import './App.css';
+
+// Lazy load components not needed immediately
+const LocationChange = lazy(() => import('./components/LocationChange'));
+const MessageDialog = lazy(() => import('./components/MessageDialog'));
 
 function App() {
   const [appState, setAppState] = useState('loading'); // loading, location, swiping, match, messaging
@@ -16,6 +19,9 @@ function App() {
   // Handle app initialization flow
   useEffect(() => {
     if (appState === 'loading') {
+      // Preload first card image while showing load screen
+      preloadFirstCard(users);
+
       const timer = setTimeout(() => {
         setAppState('location');
       }, 2000); // Show load screen for 2 seconds
@@ -65,11 +71,19 @@ function App() {
   }
 
   if (appState === 'location') {
-    return <LocationChange onConfirm={handleLocationConfirm} />;
+    return (
+      <Suspense fallback={<LoadScreen />}>
+        <LocationChange onConfirm={handleLocationConfirm} />
+      </Suspense>
+    );
   }
 
   if (appState === 'messaging' && matchedUser) {
-    return <MessageDialog user={matchedUser} onClose={handleCloseMessage} />;
+    return (
+      <Suspense fallback={<LoadScreen />}>
+        <MessageDialog user={matchedUser} onClose={handleCloseMessage} />
+      </Suspense>
+    );
   }
 
   return (
@@ -99,7 +113,7 @@ function App() {
               className="action-btn nope-btn"
               onClick={() => handleButtonSwipe('left')}
             >
-              <svg viewBox="0 0 24 24" width="32" height="32">
+              <svg viewBox="0 0 24 24" width="26" height="26">
                 <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
               </svg>
             </button>
@@ -108,7 +122,7 @@ function App() {
               className="action-btn like-btn"
               onClick={() => handleButtonSwipe('right')}
             >
-              <svg viewBox="0 0 24 24" width="32" height="32">
+              <svg viewBox="0 0 24 24" width="26" height="26">
                 <path fill="currentColor" d="M12,21.35l-1.45-1.32C5.4,15.36,2,12.28,2,8.5C2,5.42,4.42,3,7.5,3c1.74,0,3.41,0.81,4.5,2.09 C13.09,3.81,14.76,3,16.5,3C19.58,3,22,5.42,22,8.5c0,3.78-3.4,6.86-8.55,11.54L12,21.35z"/>
               </svg>
             </button>

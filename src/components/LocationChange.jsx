@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import './LocationChange.css';
 
-const LocationChange = ({ onConfirm }) => {
+const LocationChange = memo(({ onConfirm }) => {
   return (
     <div className="location-overlay">
       <div className="location-modal">
@@ -27,6 +28,8 @@ const LocationChange = ({ onConfirm }) => {
       </div>
     </div>
   );
-};
+});
+
+LocationChange.displayName = 'LocationChange';
 
 export default LocationChange;
