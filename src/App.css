@@ -5,8 +5,6 @@
 }
 
 .app {
-  min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height for mobile */
   background: #FFFFFF;
   display: flex;
   flex-direction: column;
@@ -17,8 +15,7 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
 }
 
 /* Dimmed state when location overlay is active */
