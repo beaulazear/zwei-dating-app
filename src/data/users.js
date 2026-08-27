@@ -1,7 +1,7 @@
 // Robert's POV - Users for the dating flow
 // Import local images
 import livImage from '../assets/liv-profile.jpg';
-import cierraImage from '../assets/cierra-profile.jpg';
+import brandiImage from '../assets/brandi-profile.jpg';
 import beauImage from '../assets/beau-profile.jpg';
 import dedeImage from '../assets/dede-profile.jpg';
 
@@ -9,29 +9,29 @@ export const users = [
   {
     id: 4,
     name: 'Dede',
-    age: 23,
+    age: 27,
     image: dedeImage,
     distance: 10
   },
   {
-    id: 1,
-    name: 'Liv',
-    age: 26,
-    image: livImage,
-    distance: 5
+    id: 3,
+    name: 'Beau',
+    age: 28,
+    image: beauImage,
+    distance: 3
   },
   {
     id: 2,
-    name: 'Cierra',
-    age: 24,
-    image: cierraImage,
+    name: 'Brandi',
+    age: 26,
+    image: brandiImage,
     distance: 7
   },
   {
-    id: 3,
-    name: 'Beau',
-    age: 25,
-    image: beauImage,
-    distance: 3
+    id: 1,
+    name: 'Liv',
+    age: 29,
+    image: livImage,
+    distance: 5
   }
 ];

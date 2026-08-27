@@ -134,7 +134,7 @@ function App() {
             </div>
             <h2 className="match-title">It's a Match!</h2>
             <p className="match-message">
-              Send message now?
+              Send a Message?
             </p>
             <div className="match-buttons">
               <button className="match-btn send-btn" onClick={handleSendMessage}>

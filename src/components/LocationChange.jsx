@@ -15,7 +15,7 @@ const LocationChange = memo(({ onConfirm }) => {
         </div>
         <h2 className="location-title">New Location Detected</h2>
         <p className="location-message">
-          Change location to New York, NY?
+          Change range to New York, New York?
         </p>
         <div className="location-buttons">
           <button className="location-btn confirm-btn" onClick={onConfirm}>
