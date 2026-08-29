@@ -3,11 +3,21 @@ import SwipeCard from './components/SwipeCard';
 import LoadScreen from './components/LoadScreen';
 import { users } from './data/users';
 import { preloadFirstCard } from './utils/preloadImages';
+import robertImage from './assets/beau-profile.jpg'; // Using Beau's image for Robert
 import './App.css';
 
 // Lazy load components not needed immediately
 const LocationChange = lazy(() => import('./components/LocationChange'));
 const MessageDialog = lazy(() => import('./components/MessageDialog'));
+
+// Robert user object for Dede's POV
+const robertUser = {
+  id: 999,
+  name: 'Robert',
+  age: 28,
+  image: robertImage,
+  distance: 3
+};
 
 function App() {
   const [appState, setAppState] = useState('loading'); // loading, location, swiping, match, messaging
@@ -16,24 +26,8 @@ function App() {
   const [showMatch, setShowMatch] = useState(false);
   const [matchedUser, setMatchedUser] = useState(null);
   const [buttonSwipeDirection, setButtonSwipeDirection] = useState(null);
+  const [dedePOV, setDedePOV] = useState(false);
 
-  // Fix iOS viewport height bug
-  useEffect(() => {
-    const setAppHeight = () => {
-      // Calculate true internal height and assign it to a CSS variable
-      const vh = window.innerHeight;
-      document.documentElement.style.setProperty('--app-height', `${vh}px`);
-    };
-
-    window.addEventListener('resize', setAppHeight);
-    window.addEventListener('orientationchange', setAppHeight);
-    setAppHeight();
-
-    return () => {
-      window.removeEventListener('resize', setAppHeight);
-      window.removeEventListener('orientationchange', setAppHeight);
-    };
-  }, []);
 
   // Handle app initialization flow
   useEffect(() => {
@@ -50,6 +44,13 @@ function App() {
 
   const handleLocationConfirm = () => {
     setAppState('swiping');
+  };
+
+  const handleLocationDecline = () => {
+    // Secret: trigger Dede's POV
+    setDedePOV(true);
+    setMatchedUser(robertUser);
+    setAppState('messaging');
   };
 
   const handleSwipe = (direction, user) => {
@@ -97,7 +98,7 @@ function App() {
   if (appState === 'messaging' && matchedUser) {
     return (
       <Suspense fallback={<LoadScreen />}>
-        <MessageDialog user={matchedUser} onClose={handleCloseMessage} />
+        <MessageDialog user={matchedUser} onClose={handleCloseMessage} dedePOV={dedePOV} />
       </Suspense>
     );
   }
@@ -180,7 +181,7 @@ function App() {
 
       {appState === 'location' && (
         <Suspense fallback={null}>
-          <LocationChange onConfirm={handleLocationConfirm} />
+          <LocationChange onConfirm={handleLocationConfirm} onDecline={handleLocationDecline} />
         </Suspense>
       )}
     </div>

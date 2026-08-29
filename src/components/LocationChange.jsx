@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import './LocationChange.css';
 
-const LocationChange = memo(({ onConfirm }) => {
+const LocationChange = memo(({ onConfirm, onDecline }) => {
   return (
     <div className="location-overlay">
       <div className="location-modal">
@@ -21,7 +21,7 @@ const LocationChange = memo(({ onConfirm }) => {
           <button className="location-btn confirm-btn" onClick={onConfirm}>
             Yes, Change Location
           </button>
-          <button className="location-btn cancel-btn" onClick={onConfirm}>
+          <button className="location-btn cancel-btn" onClick={onDecline}>
             No, Keep Current
           </button>
         </div>

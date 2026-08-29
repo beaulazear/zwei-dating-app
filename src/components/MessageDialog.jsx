@@ -1,16 +1,70 @@
-import { useState, memo, useCallback } from 'react';
+import { useState, memo, useCallback, useEffect } from 'react';
 import './MessageDialog.css';
 
-const MessageDialog = memo(({ user, onClose }) => {
-  const [messages, setMessages] = useState([]);
+const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
+  // If Dede's POV, initialize with Robert's message already received
+  const [messages, setMessages] = useState(dedePOV ? [
+    { text: "Hey, Dede! Anything fun going on tonight?", sender: 'other', timestamp: new Date() }
+  ] : []);
   const [inputText, setInputText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [conversationStep, setConversationStep] = useState(dedePOV ? 1 : 0);
 
   const handleSendMessage = useCallback(() => {
     if (inputText.trim()) {
       setMessages(prev => [...prev, { text: inputText, sender: 'user', timestamp: new Date() }]);
       setInputText('');
+
+      // Trigger next step in conversation
+      if (dedePOV && conversationStep === 1) {
+        // Dede's POV: After Dede responds, Robert auto-replies
+        setConversationStep(2);
+      } else if (!dedePOV && conversationStep === 0) {
+        // Robert's POV: After Robert sends first message, Dede auto-replies
+        setConversationStep(1);
+      }
     }
-  }, [inputText]);
+  }, [inputText, conversationStep, dedePOV]);
+
+  // Scripted conversation flow
+  useEffect(() => {
+    if (conversationStep === 1 && !dedePOV) {
+      // Robert's POV Step 1: Show typing indicator, then Dede auto-responds
+      setIsTyping(true);
+
+      const dedeResponseTimer = setTimeout(() => {
+        setIsTyping(false);
+        setMessages(prev => [...prev, {
+          text: "Hihihi, yes! House party?",
+          sender: 'other',
+          timestamp: new Date()
+        }]);
+        setConversationStep(2);
+      }, 2000); // 2 second delay for Dede's response
+
+      return () => clearTimeout(dedeResponseTimer);
+    } else if (conversationStep === 2) {
+      // Step 2: Show typing indicator, then auto-respond
+      const typingDelay = setTimeout(() => {
+        setIsTyping(true);
+      }, 1000);
+
+      const responseTimer = setTimeout(() => {
+        setIsTyping(false);
+        setMessages(prev => [...prev, {
+          text: "Great! What's the Address?",
+          sender: dedePOV ? 'other' : 'user', // In Dede's POV, Robert's message is 'other'
+          timestamp: new Date()
+        }]);
+        setConversationStep(3); // Conversation complete
+      }, 4000); // 3 second delay (1s + 3s)
+
+      return () => {
+        clearTimeout(typingDelay);
+        clearTimeout(responseTimer);
+      };
+    }
+  }, [conversationStep, dedePOV]);
 
   const handleKeyPress = useCallback((e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -49,6 +103,16 @@ const MessageDialog = memo(({ user, onClose }) => {
               <div className="message-bubble">{msg.text}</div>
             </div>
           ))}
+
+          {isTyping && (
+            <div className="message message-received">
+              <div className="message-bubble typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="message-input-container">
