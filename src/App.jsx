@@ -15,6 +15,7 @@ function App() {
   const [matches, setMatches] = useState([]);
   const [showMatch, setShowMatch] = useState(false);
   const [matchedUser, setMatchedUser] = useState(null);
+  const [buttonSwipeDirection, setButtonSwipeDirection] = useState(null);
 
   // Fix iOS viewport height bug
   useEffect(() => {
@@ -81,6 +82,9 @@ function App() {
   const handleButtonSwipe = (direction) => {
     if (currentUsers.length > 0) {
       const topUser = currentUsers[currentUsers.length - 1];
+      setButtonSwipeDirection(direction);
+      // Reset after a brief moment to allow next swipe
+      setTimeout(() => setButtonSwipeDirection(null), 100);
       handleSwipe(direction, topUser);
     }
   };
@@ -116,6 +120,7 @@ function App() {
                 isTop={index === currentUsers.length - 1}
                 index={index}
                 totalCards={currentUsers.length}
+                buttonSwipeDirection={index === currentUsers.length - 1 ? buttonSwipeDirection : null}
               />
             ))
           )}

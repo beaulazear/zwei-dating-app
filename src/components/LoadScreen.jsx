@@ -1,10 +1,11 @@
 import './LoadScreen.css';
+import zweiLogo from '../assets/ZWEI_logo.png';
 
 const LoadScreen = () => {
   return (
     <div className="load-screen">
       <div className="logo-container">
-        <h1 className="app-title">zwei</h1>
+        <img src={zweiLogo} alt="zwei" className="app-logo" />
       </div>
     </div>
   );

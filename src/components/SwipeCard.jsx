@@ -1,8 +1,8 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 import './SwipeCard.css';
 
-const SwipeCard = memo(({ user, onSwipe, isTop, index, totalCards }) => {
+const SwipeCard = memo(({ user, onSwipe, isTop, index, totalCards, buttonSwipeDirection }) => {
   const [exitX, setExitX] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const x = useMotionValue(0);
@@ -31,6 +31,19 @@ const SwipeCard = memo(({ user, onSwipe, isTop, index, totalCards }) => {
     }
   };
 
+  // Handle button-triggered swipes
+  useEffect(() => {
+    if (buttonSwipeDirection && isTop) {
+      // Check if this is a match
+      const isMatch = buttonSwipeDirection === 'right' && user.id === 4;
+
+      // Only animate if not a match
+      if (!isMatch) {
+        setExitX(buttonSwipeDirection === 'right' ? 300 : -300);
+      }
+    }
+  }, [buttonSwipeDirection, isTop, user.id]);
+
   return (
     <motion.div
       className="swipe-card"
@@ -45,13 +58,30 @@ const SwipeCard = memo(({ user, onSwipe, isTop, index, totalCards }) => {
       onDragEnd={handleDragEnd}
       animate={
         exitX !== 0
-          ? { x: exitX }
+          ? {
+              x: exitX,
+              opacity: 0,
+              rotate: exitX > 0 ? 20 : -20
+            }
           : {
               scale: isTop ? 1 : 0.95 - (stackPosition * 0.02),
-              y: isTop ? 0 : stackPosition * 8
+              y: isTop ? 0 : stackPosition * 8,
+              rotate: 0,
+              opacity: 1
             }
       }
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      transition={
+        isTop
+          ? {
+              type: 'spring',
+              stiffness: 300,
+              damping: 20,
+              opacity: { duration: 0.2 }
+            }
+          : {
+              duration: 0
+            }
+      }
       whileDrag={{ cursor: 'grabbing' }}
     >
       <div className="card-image">
