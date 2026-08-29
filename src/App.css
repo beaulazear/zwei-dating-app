@@ -15,7 +15,9 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: -webkit-fill-available;
+  height: var(--app-height, 100vh);
 }
 
 /* Dimmed state when location overlay is active */
@@ -80,7 +82,7 @@
 /* Action Buttons */
 .action-buttons {
   position: absolute;
-  bottom: 32px;
+  bottom: calc(32px + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -93,7 +95,6 @@
   border-radius: 50px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  margin-bottom: env(safe-area-inset-bottom);
 }
 
 .action-btn {
@@ -252,7 +253,7 @@
 /* Responsive Design */
 @media (max-width: 480px) {
   .action-buttons {
-    bottom: 24px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
     gap: 18px;
     padding: 10px 20px;
   }

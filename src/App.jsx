@@ -16,6 +16,24 @@ function App() {
   const [showMatch, setShowMatch] = useState(false);
   const [matchedUser, setMatchedUser] = useState(null);
 
+  // Fix iOS viewport height bug
+  useEffect(() => {
+    const setAppHeight = () => {
+      // Calculate true internal height and assign it to a CSS variable
+      const vh = window.innerHeight;
+      document.documentElement.style.setProperty('--app-height', `${vh}px`);
+    };
+
+    window.addEventListener('resize', setAppHeight);
+    window.addEventListener('orientationchange', setAppHeight);
+    setAppHeight();
+
+    return () => {
+      window.removeEventListener('resize', setAppHeight);
+      window.removeEventListener('orientationchange', setAppHeight);
+    };
+  }, []);
+
   // Handle app initialization flow
   useEffect(() => {
     if (appState === 'loading') {
