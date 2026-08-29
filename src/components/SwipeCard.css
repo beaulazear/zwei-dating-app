@@ -9,8 +9,11 @@
   border-radius: 0;
   overflow: hidden;
   box-shadow: none;
-  will-change: transform;
+  will-change: transform, scale, opacity;
   background: white;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.3s ease;
 }
 
 .card-image {
@@ -66,12 +69,18 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 24px 110px 24px;
+  padding: 0 24px 115px 24px;
   color: white;
   z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .card-info {
+    padding: 0 20px 100px 20px;
+  }
 }
 
 .card-info h2 {
@@ -105,4 +114,27 @@
 
 .location-pin {
   flex-shrink: 0;
+}
+
+/* Swipe overlays */
+.swipe-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.nope-overlay {
+  transform: translate(-50%, -50%) rotate(-15deg);
+}
+
+.like-overlay {
+  transform: translate(-50%, -50%) rotate(15deg);
 }

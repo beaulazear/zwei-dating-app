@@ -96,6 +96,8 @@ function App() {
                 user={user}
                 onSwipe={handleSwipe}
                 isTop={index === currentUsers.length - 1}
+                index={index}
+                totalCards={currentUsers.length}
               />
             ))
           )}
