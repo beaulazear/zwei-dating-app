@@ -9,6 +9,31 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [conversationStep, setConversationStep] = useState(dedePOV ? 1 : 0);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  // Handle keyboard appearing/disappearing on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        const viewportHeight = window.visualViewport.height;
+        const windowHeight = window.innerHeight;
+        const keyboardHeight = windowHeight - viewportHeight;
+        setKeyboardHeight(keyboardHeight);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+      window.visualViewport.addEventListener('scroll', handleResize);
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+        window.visualViewport.removeEventListener('scroll', handleResize);
+      }
+    };
+  }, []);
 
   const handleSendMessage = useCallback(() => {
     if (inputText.trim()) {
@@ -63,7 +88,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
   }, [handleSendMessage]);
 
   return (
-    <div className="message-dialog-overlay">
+    <div className="message-dialog-overlay" style={{ height: keyboardHeight > 0 ? `${window.visualViewport?.height}px` : '100%' }}>
       <div className="message-dialog">
         <div className="message-header">
           <button className="back-btn" onClick={onClose}>
