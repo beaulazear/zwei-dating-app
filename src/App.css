@@ -14,14 +14,21 @@
   position: relative;
 }
 
-/* Dimmed state when location overlay is active */
-.app-dimmed .main-content {
+/* Dimmed state when location overlay is active - only dim cards, not header */
+.app-dimmed .card-container {
   filter: brightness(0.4) grayscale(0.3);
   transition: filter 0.3s ease-in-out;
   pointer-events: none; /* Disable interaction when dimmed */
 }
 
-.app:not(.app-dimmed) .main-content {
+.app-dimmed .action-buttons {
+  filter: brightness(0.4) grayscale(0.3);
+  transition: filter 0.3s ease-in-out;
+  pointer-events: none; /* Disable interaction when dimmed */
+}
+
+.app:not(.app-dimmed) .card-container,
+.app:not(.app-dimmed) .action-buttons {
   filter: brightness(1) grayscale(0);
   transition: filter 0.4s ease-out;
 }
