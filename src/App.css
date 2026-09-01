@@ -188,7 +188,6 @@
   background: white;
   border-radius: 16px;
   padding: 28px 24px;
-  padding-bottom: max(28px, calc(env(safe-area-inset-bottom, 0px) + 24px));
   max-width: 340px;
   width: 85%;
   max-height: 80vh;
@@ -298,7 +297,6 @@
 
   .match-modal {
     padding: 24px 20px;
-    padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px));
     width: 88%;
   }
 
