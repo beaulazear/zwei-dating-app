@@ -15,36 +15,25 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
       setMessages(prev => [...prev, { text: inputText, sender: 'user', timestamp: new Date() }]);
       setInputText('');
 
-      // Trigger next step in conversation
+      // Only trigger next step in Dede's POV
       if (dedePOV && conversationStep === 1) {
-        // Dede's POV: After Dede responds, Robert auto-replies
+        // Dede's POV: After Dede responds, Robert will auto-reply
         setConversationStep(2);
-      } else if (!dedePOV && conversationStep === 0) {
-        // Robert's POV: After Robert sends first message, Dede auto-replies
-        setConversationStep(1);
       }
+      // Robert's POV: No auto-progression, conversation ends after he sends
     }
   }, [inputText, conversationStep, dedePOV]);
 
-  // Scripted conversation flow
+  // Scripted conversation flow - ONLY for Dede's POV
   useEffect(() => {
-    if (conversationStep === 1 && !dedePOV) {
-      // Robert's POV Step 1: Show typing indicator, then Dede auto-responds
-      setIsTyping(true);
+    if (!dedePOV) {
+      // Robert's POV: NO scripted conversation, NO auto-responses
+      return;
+    }
 
-      const dedeResponseTimer = setTimeout(() => {
-        setIsTyping(false);
-        setMessages(prev => [...prev, {
-          text: "Hihihi, yes! House party?",
-          sender: 'other',
-          timestamp: new Date()
-        }]);
-        setConversationStep(2);
-      }, 2000); // 2 second delay for Dede's response
-
-      return () => clearTimeout(dedeResponseTimer);
-    } else if (conversationStep === 2) {
-      // Step 2: Show typing indicator, then auto-respond
+    // DEDE'S POV ONLY - scripted conversation
+    if (conversationStep === 2) {
+      // After Dede sends her response, show typing indicator for Robert
       const typingDelay = setTimeout(() => {
         setIsTyping(true);
       }, 1000);
@@ -53,7 +42,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
         setIsTyping(false);
         setMessages(prev => [...prev, {
           text: "Great! What's the Address?",
-          sender: dedePOV ? 'other' : 'user', // In Dede's POV, Robert's message is 'other'
+          sender: 'other', // Robert's message
           timestamp: new Date()
         }]);
         setConversationStep(3); // Conversation complete

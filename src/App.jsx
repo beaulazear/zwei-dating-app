@@ -3,7 +3,7 @@ import SwipeCard from './components/SwipeCard';
 import LoadScreen from './components/LoadScreen';
 import { users } from './data/users';
 import { preloadFirstCard } from './utils/preloadImages';
-import robertImage from './assets/beau-profile.jpg'; // Using Beau's image for Robert
+import robertImage from './assets/robert.jpg';
 import './App.css';
 
 // Lazy load components not needed immediately
