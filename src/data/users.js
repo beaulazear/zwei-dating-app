@@ -11,7 +11,7 @@ export const users = [
     name: 'Dede',
     age: 27,
     image: dedeImage,
-    distance: 10
+    distance: 2
   },
   {
     id: 3,
@@ -25,13 +25,13 @@ export const users = [
     name: 'Brandi',
     age: 26,
     image: brandiImage,
-    distance: 7
+    distance: 1
   },
   {
     id: 1,
     name: 'Liv',
     age: 29,
     image: livImage,
-    distance: 5
+    distance: 2
   }
 ];

@@ -4,6 +4,7 @@ import LoadScreen from './components/LoadScreen';
 import { users } from './data/users';
 import { preloadFirstCard } from './utils/preloadImages';
 import robertImage from './assets/robert.jpg';
+import zweiLogo from './assets/ZWEI_logo.png';
 import './App.css';
 
 // Lazy load components not needed immediately
@@ -16,7 +17,7 @@ const robertUser = {
   name: 'Robert',
   age: 28,
   image: robertImage,
-  distance: 3
+  distance: 2
 };
 
 function App() {
@@ -106,6 +107,10 @@ function App() {
   return (
     <div className={`app ${appState === 'location' || appState === 'match' ? 'app-dimmed' : ''}`}>
       <main className="main-content">
+        <header className="profile-header">
+          <img src={zweiLogo} alt="zwei" className="header-logo" />
+        </header>
+
         <div className="card-container">
           {currentUsers.length === 0 ? (
             <div className="no-more-cards">
@@ -160,6 +165,7 @@ function App() {
             </div>
             <h2 className="match-title">It's a Match!</h2>
             <p className="match-message">
+              Dede likes you back!<br />
               Send a Message?
             </p>
             <div className="match-buttons">
