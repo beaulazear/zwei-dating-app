@@ -14,12 +14,12 @@
 
 .location-modal {
   background: white;
-  border-radius: 20px;
-  padding: 40px 30px;
-  max-width: 400px;
-  width: 90%;
+  border-radius: 16px;
+  padding: 28px 24px;
+  max-width: 340px;
+  width: 85%;
   text-align: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   animation: slideUp 0.4s ease-out;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .location-icon {
-  margin: 0 auto 20px;
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,29 +46,29 @@
 }
 
 .location-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: #343434;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .location-message {
-  font-size: 16px;
-  color: #343434;
-  margin-bottom: 30px;
-  line-height: 1.5;
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.4;
 }
 
 .location-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .location-btn {
-  padding: 16px 24px;
+  padding: 14px 24px;
   border: none;
-  border-radius: 30px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;

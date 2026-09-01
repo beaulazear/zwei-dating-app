@@ -4,8 +4,16 @@ import livImage from '../assets/liv-profile.jpg';
 import brandiImage from '../assets/brandi-profile.jpg';
 import beauImage from '../assets/beau-profile.jpg';
 import dedeImage from '../assets/dede-profile.jpg';
+import extraImage from '../assets/extra.jpg';
 
 export const users = [
+  {
+    id: 0,
+    name: 'Emma',
+    age: 25,
+    image: extraImage,
+    distance: 2
+  },
   {
     id: 4,
     name: 'Dede',

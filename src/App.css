@@ -186,15 +186,15 @@
 
 .match-modal {
   background: white;
-  border-radius: 20px;
-  padding: 40px 30px;
-  padding-bottom: max(40px, calc(env(safe-area-inset-bottom, 0px) + 30px));
-  max-width: 400px;
-  width: 90%;
+  border-radius: 16px;
+  padding: 28px 24px;
+  padding-bottom: max(28px, calc(env(safe-area-inset-bottom, 0px) + 24px));
+  max-width: 340px;
+  width: 85%;
   max-height: 80vh;
   overflow-y: auto;
   text-align: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   animation: slideUp 0.4s ease-out;
 }
 
@@ -210,7 +210,7 @@
 }
 
 .match-icon {
-  margin: 0 auto 20px;
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,17 +221,17 @@
 }
 
 .match-title {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   color: #343434;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   letter-spacing: -0.5px;
 }
 
 .match-message {
   font-size: 15px;
   color: #666;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   line-height: 1.4;
   font-weight: 400;
 }
@@ -239,13 +239,13 @@
 .match-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .match-btn {
-  padding: 16px 24px;
+  padding: 14px 24px;
   border: none;
-  border-radius: 30px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -297,23 +297,23 @@
   }
 
   .match-modal {
-    padding: 32px 24px;
-    padding-bottom: max(32px, calc(env(safe-area-inset-bottom, 0px) + 24px));
-    width: 85%;
+    padding: 24px 20px;
+    padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px));
+    width: 88%;
   }
 
   .match-title {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   .match-message {
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
 
   .match-btn {
-    padding: 14px 20px;
+    padding: 13px 20px;
     font-size: 15px;
   }
 
