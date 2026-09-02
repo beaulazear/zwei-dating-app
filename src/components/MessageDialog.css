@@ -7,7 +7,7 @@
   background: white;
   z-index: 2000;
   animation: slideInRight 0.3s ease-out;
-  transition: height 0.2s ease-out;
+  overflow: hidden;
 }
 
 @keyframes slideInRight {
@@ -21,10 +21,13 @@
 
 .message-dialog {
   height: 100%;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
 }
 
 .message-header {
@@ -36,6 +39,10 @@
   background: white;
   border-bottom: 1px solid #e0e0e0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .back-btn {
@@ -85,8 +92,11 @@
 .messages-container {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px;
   background: #f8f8f8;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .match-announcement {
@@ -160,6 +170,7 @@
   padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
   background: white;
   border-top: 1px solid #e0e0e0;
+  flex-shrink: 0;
 }
 
 .message-input {
