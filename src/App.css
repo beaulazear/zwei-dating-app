@@ -104,7 +104,7 @@
 /* Action Buttons */
 .action-buttons {
   position: absolute;
-  bottom: max(32px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+  bottom: max(56px, calc(env(safe-area-inset-bottom, 0px) + 40px));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -285,7 +285,7 @@
   }
 
   .action-buttons {
-    bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+    bottom: max(48px, calc(env(safe-area-inset-bottom, 0px) + 32px));
     gap: 18px;
     padding: 10px 20px;
   }
