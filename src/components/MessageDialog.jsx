@@ -9,6 +9,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [conversationStep, setConversationStep] = useState(dedePOV ? 1 : 0);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
@@ -51,6 +52,14 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
       window.scrollTo(0, 0);
       document.body.scrollTop = 0;
 
+      // Calculate keyboard height
+      if (window.visualViewport) {
+        const viewportHeight = window.visualViewport.height;
+        const windowHeight = window.innerHeight;
+        const kbHeight = windowHeight - viewportHeight;
+        setKeyboardHeight(kbHeight > 0 ? kbHeight : 0);
+      }
+
       if (document.activeElement === inputRef.current) {
         scrollToBottom();
       }
@@ -65,6 +74,9 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
     // Listen for visualViewport changes (iOS keyboard)
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
+
+      // Set initial keyboard height
+      handleResize();
     }
 
     return () => {
@@ -146,7 +158,14 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
           <div className="header-spacer" />
         </div>
 
-        <div className="messages-container" ref={messagesContainerRef}>
+        <div
+          className="messages-container"
+          ref={messagesContainerRef}
+          style={{
+            marginBottom: keyboardHeight > 0 ? `${keyboardHeight}px` : '0px',
+            transition: 'margin-bottom 0.2s ease-out'
+          }}
+        >
           <div className="match-announcement">
             <p>You matched with {user.name}</p>
             <span className="match-date">{new Date().toLocaleDateString()}</span>
@@ -174,7 +193,13 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="message-input-container">
+        <div
+          className="message-input-container"
+          style={{
+            transform: keyboardHeight > 0 ? `translateY(-${keyboardHeight}px)` : 'none',
+            transition: 'transform 0.2s ease-out'
+          }}
+        >
           <input
             ref={inputRef}
             type="text"
