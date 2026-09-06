@@ -9,6 +9,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [conversationStep, setConversationStep] = useState(dedePOV ? 1 : 0);
+  const [viewportHeight, setViewportHeight] = useState('100dvh');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -48,15 +49,18 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
     };
 
     const handleResize = () => {
-      // When keyboard appears/disappears
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0;
-
-      // Calculate keyboard height
+      // Lock wrapper height to exact visible area above keyboard
       if (window.visualViewport) {
-        const viewportHeight = window.visualViewport.height;
+        setViewportHeight(`${window.visualViewport.height}px`);
+
+        // Snap the background layout canvas back down
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+
+        // Calculate keyboard height
+        const viewportHeightNum = window.visualViewport.height;
         const windowHeight = window.innerHeight;
-        const kbHeight = windowHeight - viewportHeight;
+        const kbHeight = windowHeight - viewportHeightNum;
         setKeyboardHeight(kbHeight > 0 ? kbHeight : 0);
       }
 
@@ -74,8 +78,9 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
     // Listen for visualViewport changes (iOS keyboard)
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
+      window.visualViewport.addEventListener('scroll', handleResize);
 
-      // Set initial keyboard height
+      // Set initial viewport height
       handleResize();
     }
 
@@ -86,6 +91,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
       }
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', handleResize);
+        window.visualViewport.removeEventListener('scroll', handleResize);
       }
     };
   }, []);
@@ -143,7 +149,17 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
   }, [handleSendMessage]);
 
   return (
-    <div className="message-dialog-overlay">
+    <div
+      className="message-dialog-overlay"
+      style={{
+        height: viewportHeight,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        overflow: 'hidden'
+      }}
+    >
       <div className="message-dialog">
         <div className="message-header">
           <button className="back-btn" onClick={onClose}>
@@ -196,8 +212,8 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
         <div
           className="message-input-container"
           style={{
-            transform: keyboardHeight > 0 ? `translateY(-${keyboardHeight}px)` : 'none',
-            transition: 'transform 0.2s ease-out'
+            bottom: keyboardHeight > 0 ? `${keyboardHeight}px` : '0px',
+            transition: 'bottom 0.2s ease-out'
           }}
         >
           <input
@@ -208,6 +224,10 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyPress={handleKeyPress}
+            enterKeyHint="send"
+            autoCorrect="off"
+            autoCapitalize="sentences"
+            style={{ fontSize: '16px' }}
           />
           <button
             className="send-btn"
