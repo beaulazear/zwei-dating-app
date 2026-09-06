@@ -18,7 +18,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  // Handle iOS keyboard for PWA - Keep messages visible above keyboard
+  // Handle iOS keyboard for PWA - Prevent layout viewport shift
   useEffect(() => {
     const scrollToBottom = () => {
       if (messagesContainerRef.current) {
@@ -26,15 +26,31 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
       }
     };
 
-    const handleFocus = () => {
-      // Multiple scroll attempts to ensure it works
+    const handleFocus = (e) => {
+      // Prevent native event bubbling
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Instantly snap the layout viewport back to its true boundaries
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+
+      // Scroll messages to bottom
       setTimeout(scrollToBottom, 100);
       setTimeout(scrollToBottom, 300);
-      setTimeout(scrollToBottom, 500);
+    };
+
+    const handleBlur = () => {
+      // Force cleanup when keyboard dismisses
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
     };
 
     const handleResize = () => {
       // When keyboard appears/disappears
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+
       if (document.activeElement === inputRef.current) {
         scrollToBottom();
       }
@@ -42,24 +58,22 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
 
     const inputElement = inputRef.current;
     if (inputElement) {
-      inputElement.addEventListener('focus', handleFocus);
-      inputElement.addEventListener('click', handleFocus);
+      inputElement.addEventListener('focus', handleFocus, { passive: false });
+      inputElement.addEventListener('blur', handleBlur);
     }
 
     // Listen for visualViewport changes (iOS keyboard)
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
-      window.visualViewport.addEventListener('scroll', handleResize);
     }
 
     return () => {
       if (inputElement) {
         inputElement.removeEventListener('focus', handleFocus);
-        inputElement.removeEventListener('click', handleFocus);
+        inputElement.removeEventListener('blur', handleBlur);
       }
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', handleResize);
-        window.visualViewport.removeEventListener('scroll', handleResize);
       }
     };
   }, []);
