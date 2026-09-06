@@ -10,11 +10,57 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [conversationStep, setConversationStep] = useState(dedePOV ? 1 : 0);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
+
+  // Handle iOS keyboard for PWA
+  useEffect(() => {
+    const handleFocus = () => {
+      // Delay to allow keyboard to appear, then scroll
+      setTimeout(() => {
+        // Scroll the input into view
+        inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Then scroll messages to show latest
+        setTimeout(() => {
+          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 100);
+      }, 400);
+    };
+
+    const handleResize = () => {
+      // When keyboard appears/disappears, ensure latest message is visible
+      if (document.activeElement === inputRef.current) {
+        setTimeout(() => {
+          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 100);
+      }
+    };
+
+    const inputElement = inputRef.current;
+    if (inputElement) {
+      inputElement.addEventListener('focus', handleFocus);
+    }
+
+    // Listen for visualViewport changes (iOS keyboard)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+    }
+
+    return () => {
+      if (inputElement) {
+        inputElement.removeEventListener('focus', handleFocus);
+      }
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+    };
+  }, []);
 
   const handleSendMessage = useCallback(() => {
     if (inputText.trim()) {
@@ -84,7 +130,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
           <div className="header-spacer" />
         </div>
 
-        <div className="messages-container">
+        <div className="messages-container" ref={messagesContainerRef}>
           <div className="match-announcement">
             <p>You matched with {user.name}</p>
             <span className="match-date">{new Date().toLocaleDateString()}</span>
@@ -114,6 +160,7 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
 
         <div className="message-input-container">
           <input
+            ref={inputRef}
             type="text"
             className="message-input"
             placeholder="Type a message..."
