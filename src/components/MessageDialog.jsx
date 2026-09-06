@@ -18,46 +18,48 @@ const MessageDialog = memo(({ user, onClose, dedePOV = false }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  // Handle iOS keyboard for PWA
+  // Handle iOS keyboard for PWA - Keep messages visible above keyboard
   useEffect(() => {
-    const handleFocus = () => {
-      // Delay to allow keyboard to appear, then scroll
-      setTimeout(() => {
-        // Scroll the input into view
-        inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    const scrollToBottom = () => {
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      }
+    };
 
-        // Then scroll messages to show latest
-        setTimeout(() => {
-          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }, 100);
-      }, 400);
+    const handleFocus = () => {
+      // Multiple scroll attempts to ensure it works
+      setTimeout(scrollToBottom, 100);
+      setTimeout(scrollToBottom, 300);
+      setTimeout(scrollToBottom, 500);
     };
 
     const handleResize = () => {
-      // When keyboard appears/disappears, ensure latest message is visible
+      // When keyboard appears/disappears
       if (document.activeElement === inputRef.current) {
-        setTimeout(() => {
-          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }, 100);
+        scrollToBottom();
       }
     };
 
     const inputElement = inputRef.current;
     if (inputElement) {
       inputElement.addEventListener('focus', handleFocus);
+      inputElement.addEventListener('click', handleFocus);
     }
 
     // Listen for visualViewport changes (iOS keyboard)
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
+      window.visualViewport.addEventListener('scroll', handleResize);
     }
 
     return () => {
       if (inputElement) {
         inputElement.removeEventListener('focus', handleFocus);
+        inputElement.removeEventListener('click', handleFocus);
       }
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', handleResize);
+        window.visualViewport.removeEventListener('scroll', handleResize);
       }
     };
   }, []);
